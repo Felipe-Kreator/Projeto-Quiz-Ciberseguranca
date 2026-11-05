@@ -1,0 +1,81 @@
+/* Todas as cores e medidas ficam em variáveis: mudou aqui, mudou no site inteiro. */
+:root{--fundo:#0b1626;--fundo2:#101f36;--cartao:#14263f;--borda:#27425f;--texto:#e8eef7;--suave:#a9b9cf;
+  --primaria:#1d63c4;--primaria-esc:#164f9e;--destaque:#5cb0ff;--ok:#35c27d;--erro:#ff6b6b;--foco:#ffd166;--raio:16px;
+  --fonte:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;font-family:var(--fonte);color:var(--texto);line-height:1.6;
+  background:radial-gradient(900px 500px at 85% -10%,#17407a66,transparent),var(--fundo)}
+[hidden]{display:none!important}
+h1,h2,h3{line-height:1.2;margin:0 0 .6rem}
+h1{font-size:1.9rem}h2{font-size:1.5rem}h3{font-size:1.1rem;margin-top:1.6rem}
+:focus-visible{outline:3px solid var(--foco);outline-offset:3px}
+.pular{position:absolute;left:-999px;background:var(--foco);color:#000;padding:.5rem 1rem;z-index:9}.pular:focus{left:1rem;top:1rem}
+
+/* Cabeçalho e rodapé */
+.topo{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem}
+.marca{display:flex;align-items:center;gap:.6rem;color:var(--texto);text-decoration:none;font-weight:700;font-size:1.2rem}
+.rodape{margin-top:auto;padding:1.5rem 1rem;text-align:center;color:var(--suave);font-size:.85rem}
+
+/* Conteúdo */
+main{width:100%;max-width:760px;margin:0 auto;padding:0 1rem}
+.tela{animation:entrar .35s ease both}.tela--centro{text-align:center}
+@keyframes entrar{from{opacity:0;transform:translateY(8px)}}
+.selo{display:inline-block;margin:.5rem 0;padding:.2rem .8rem;border:1px solid var(--borda);border-radius:99px;color:var(--destaque);font-size:.85rem}
+.lead{color:var(--suave);font-size:1.1rem}
+.painel,.cartao-pergunta{background:var(--cartao);border:1px solid var(--borda);border-radius:var(--raio);padding:1.2rem;box-shadow:0 10px 30px #0006}
+fieldset{border:0;padding:0;margin:0 0 1.2rem}legend{font-weight:700;margin-bottom:.5rem}
+.regras{color:var(--suave);padding-left:1.2rem;margin-top:1.5rem}
+
+/* Botões e estados de interação (hover, foco e selecionado) feitos só com CSS */
+.botao{font:inherit;font-weight:700;padding:.8rem 1.4rem;border-radius:12px;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
+.botao--primario{background:var(--primaria);color:#fff}.botao--primario:hover{background:var(--primaria-esc);transform:translateY(-2px)}
+.botao--leve{background:transparent;color:var(--texto);border-color:var(--borda)}.botao--leve:hover{border-color:var(--destaque)}
+.opcoes{display:flex;flex-wrap:wrap;gap:.6rem}
+.opcao{position:relative}.opcao input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0}
+.opcao span{display:block;padding:.6rem 1rem;border:1px solid var(--borda);border-radius:12px;background:var(--fundo2)}
+.opcao small{display:block;color:var(--suave)}
+.opcao:hover span{border-color:var(--destaque)}
+.opcao input:checked+span{border-color:var(--destaque);background:#17407a}
+.opcao input:focus-visible+span{outline:3px solid var(--foco)}
+
+/* Componentes do quiz: barra de progresso, cartão da pergunta e área de feedback */
+.topo-jogo{display:flex;justify-content:space-between;color:var(--suave);margin:0}.topo-jogo p{margin:0 0 .4rem}
+.barra-progresso{height:10px;background:#1c3250;border-radius:99px;overflow:hidden;margin-bottom:1rem}
+#barra{height:100%;width:0;background:linear-gradient(90deg,var(--primaria),var(--destaque));transition:width .4s}
+.etiqueta{margin:0 0 .4rem;color:var(--destaque);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em}
+.enunciado{font-size:1.15rem}
+.alternativas{display:grid;gap:.7rem;margin-top:1rem}
+.alternativa{display:flex;align-items:center;gap:.8rem;font:inherit;text-align:left;padding:.9rem 1rem;color:var(--texto);background:var(--fundo2);
+  border:2px solid var(--borda);border-radius:12px;cursor:pointer;transition:border-color .15s,transform .15s}
+.alternativa:hover:not(:disabled){border-color:var(--destaque);transform:translateX(4px)}
+.alternativa:disabled{cursor:default}
+.alternativa .num{display:grid;place-items:center;min-width:1.8rem;height:1.8rem;border-radius:50%;background:#1c3250;font-weight:700}
+.alternativa--escolhida{border-color:var(--destaque)}
+.alternativa--correta{border-color:var(--ok);background:#12382c}
+.alternativa--errada{border-color:var(--erro);background:#3b1a24}
+.dica{color:var(--suave);font-size:.85rem;margin:1rem 0 0}
+.area-feedback{margin-top:1rem;padding:1.2rem;border-radius:var(--raio);background:var(--cartao);border:2px solid var(--borda);animation:entrar .3s both}
+.area-feedback.ok{border-color:var(--ok)}.area-feedback.erro{border-color:var(--erro)}
+.area-feedback.ok h3{color:var(--ok)}.area-feedback.erro h3{color:var(--erro)}
+.area-feedback h3{margin-top:0}.fb-correta{font-weight:700}.fonte{color:var(--suave);font-size:.9rem}.fonte a{color:var(--destaque)}
+
+/* Resultado */
+.anel{--p:0;width:170px;height:170px;margin:1rem auto;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--destaque) calc(var(--p)*1%),#1c3250 0)}
+.anel span{width:78%;aspect-ratio:1;border-radius:50%;background:var(--cartao);display:grid;place-items:center;font-size:2.2rem;font-weight:700}
+.acoes{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin-top:1.2rem}
+
+/* Estatísticas */
+.barras,.lista-fontes{list-style:none;padding:0;margin:0 0 1rem}
+.barras li{margin-bottom:.7rem}.barras .trilho{height:8px;background:#1c3250;border-radius:99px;overflow:hidden}
+.barras .preenche{height:100%;background:var(--destaque)}
+.lista-fontes li{padding:.6rem 0;border-bottom:1px solid var(--borda)}.lista-fontes a{color:var(--destaque)}
+
+.carregando{position:fixed;inset:0;display:flex;gap:.8rem;align-items:center;justify-content:center;background:#0b1626d9;z-index:5}
+.giro{width:22px;height:22px;border:3px solid var(--borda);border-top-color:var(--destaque);border-radius:50%;animation:gira .8s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+
+/* Responsivo: pensado para 360px (base), 768px e 1280px */
+@media (min-width:768px){h1{font-size:2.5rem}.painel,.cartao-pergunta{padding:2rem}.alternativas{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+@media (min-width:1280px){main{max-width:860px}.topo{padding:1.5rem 3rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
