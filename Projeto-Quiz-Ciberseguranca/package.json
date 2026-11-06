@@ -1,0 +1,17 @@
+{
+  "name": "cyberquiz-backend",
+  "version": "1.0.0",
+  "description": "API do Tech Trivia de Cibersegurança (Node.js, sem frameworks)",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/servidor.js",
+    "dev": "node --watch src/servidor.js",
+    "test": "node --test teste/api.test.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  }
+}
+

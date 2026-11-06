@@ -1,74 +1,60 @@
 # CyberQuiz — Quiz de Cibersegurança
 
-Projeto acadêmico de uma aplicação web educacional para testar e ampliar conhecimentos sobre cibersegurança por meio de perguntas interativas.
+Projeto acadêmico de uma aplicação web educacional para testar e ampliar conhecimentos sobre cibersegurança por meio de perguntas de Certo/Errado, com explicação e fonte de referência a cada resposta.
 
 **Período:** 2026.2  
 **Integrantes:** João, Maria e Felipe  
-**Tecnologias previstas:** HTML5, CSS3, JavaScript e PostgreSQL
+**Publicação:** https://projeto-interdisciplinar-dun.vercel.app
 
 ## Sobre o projeto
 
-O CyberQuiz propõe uma experiência de aprendizado com perguntas de múltipla escolha sobre segurança digital, ameaças cibernéticas, proteção de dados e boas práticas.
-
-A aplicação deverá permitir que os participantes respondam a perguntas, acompanhem seu desempenho e consultem um ranking de pontuações.
-
-## Objetivos
-
-- Promover a conscientização sobre cibersegurança.
-- Testar conhecimentos sobre segurança digital.
-- Organizar perguntas por categorias.
-- Calcular e armazenar pontuações.
-- Apresentar um ranking de resultados.
-- Aplicar boas práticas de desenvolvimento seguro.
+O quiz sorteia perguntas sobre segurança digital (senhas, phishing, malware, privacidade, redes), confere a resposta no servidor e mostra uma explicação com a fonte. O placar da partida fica no navegador; o banco não guarda pontuação nem dados de jogadores.
 
 ## Tecnologias
 
 | Tecnologia | Finalidade |
 |---|---|
-| HTML5 | Estrutura das páginas |
-| CSS3 | Estilização e responsividade |
-| JavaScript | Lógica do frontend e backend |
-| PostgreSQL | Persistência dos dados |
-| Git | Controle de versão |
-| GitHub | Colaboração e hospedagem do repositório |
+| HTML5, CSS3, JavaScript (ES modules) | Frontend, sem frameworks |
+| Node.js 20+ (módulo `http`) | API, sem frameworks |
+| PostgreSQL (`pg`) | Persistência das perguntas |
+| Vercel + Supabase | Hospedagem e banco em produção |
 
-O projeto não prevê o uso de frameworks. O ambiente de execução do backend deverá ser confirmado conforme as regras da disciplina.
-
-## Funcionalidades previstas
-
-- [ ] Tela inicial
-- [ ] Exibição de perguntas e alternativas
-- [ ] Seleção e validação de respostas
-- [ ] Cálculo da pontuação
-- [ ] Tela de resultados
-- [ ] Armazenamento de resultados
-- [ ] Ranking de participantes
-- [ ] Organização das perguntas por categorias
-
-## Estrutura planejada
+## Estrutura do repositório
 
 ```text
-Project-for-University---2026.2/
-├── docs/
-│   ├── documentacao.md
-│   ├── requisitos.md
-│   ├── arquitetura.md
-│   ├── banco-de-dados.md
-│   └── casos-de-uso.md
-├── quiz_cyberseguranca/
-│   ├── frontend/
-│   ├── backend/
-│   └── database/
-├── .gitignore
-└── README.md
+.
+├── api/index.js                 função serverless da Vercel (reutiliza o backend)
+├── scripts/build.mjs            copia o frontend para public/ no deploy
+├── vercel.json                  configuração de deploy
+├── package.json                 scripts da raiz (build e testes)
+├── docs/                        documentação do projeto
+│   └── doc_date/                templates e orientações da disciplina
+└── quiz_cyberseguranca/
+    ├── frontend/frontend/       interface (index.html, css/, js/, img/)
+    ├── backend/                 API Node.js (src/, teste/, .env.example)
+    └── database/                scripts do banco
 ```
 
-Esta é uma estrutura planejada. Os diretórios da aplicação podem ser criados durante a implementação.
+## Como rodar localmente
+
+```bash
+# 1. Banco: veja quiz_cyberseguranca/database/README.md
+# 2. API
+cd quiz_cyberseguranca/backend
+npm install
+cp .env.example .env        # preencha com os dados do seu banco
+npm start                   # http://localhost:3000
+
+# 3. Frontend: sirva a pasta quiz_cyberseguranca/frontend/frontend
+#    (ex.: extensão Live Server do VS Code, porta 5500) e coloque
+#    CORS_ORIGEM=http://localhost:5500 no .env
+```
+
+Testes: `npm test` dentro de `quiz_cyberseguranca/backend` (precisam do PostgreSQL carregado).
 
 ## Documentação
 
 - [Minimundo](docs/minimundo.md)
-
 - [Documentação geral](docs/documentacao.md)
 - [Requisitos](docs/requisitos.md)
 - [Arquitetura](docs/arquitetura.md)
@@ -76,36 +62,25 @@ Esta é uma estrutura planejada. Os diretórios da aplicação podem ser criados
 - [Casos de uso](docs/casos-de-uso.md)
 - [Conceitos de cibersegurança](docs/conceitos-ciberseguranca.md)
 - [Responsabilidades do banco e da aplicação](docs/responsabilidades-banco-e-aplicacao.md)
-
-## Requisitos para execução
-
-Quando a aplicação estiver implementada, serão necessários:
-
-- Navegador moderno.
-- PostgreSQL configurado.
-- Ambiente de execução JavaScript compatível com o backend.
-- Arquivos e configurações da aplicação.
-
-As instruções exatas de instalação e execução serão incluídas após a definição do ambiente e a implementação.
+- [Integração Vercel + Supabase](docs/INTEGRACAO-VERCEL.md)
+- [README do backend](quiz_cyberseguranca/backend/README.md)
 
 ## Segurança
 
-A aplicação deverá adotar validação no backend, consultas parametrizadas, proteção das respostas corretas, controle da lógica de pontuação, tratamento seguro de erros e proteção de credenciais.
+Validação de entrada no backend, consultas parametrizadas, gabarito nunca enviado junto com a pergunta, limite de requisições, cabeçalhos de segurança, CORS restrito, erros genéricos para o usuário e segredos fora do Git (`.env` no `.gitignore`). A API usa um usuário de banco somente leitura.
 
 ## Equipe
 
-| Integrante | Responsabilidades propostas |
+| Integrante | Responsabilidades |
 |---|---|
 | João | Backend e apoio à documentação técnica |
 | Maria | Frontend e interface |
 | Felipe | Banco de dados, integração, documentação geral e organização do repositório |
 
-A divisão é inicial e pode ser ajustada entre os integrantes.
-
 ## Status
 
-**Em planejamento e documentação.**
+Aplicação funcional e publicada. Pendente: versionar o esquema/carga reais do banco em `04-ddl.sql` e `05-dml-consultas.sql`, que ainda são templates.
 
 ## Licença
 
-A licença do projeto deverá ser definida pela equipe e registrada em um arquivo `LICENSE`, caso seja necessária.
+A licença do projeto deve ser definida pela equipe e registrada em um arquivo `LICENSE`.
